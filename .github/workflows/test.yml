@@ -12,9 +12,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: npm install @octokit/action
-      - uses: ./
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          templateName: ${{ github.event.inputs.template }}
+    - name: release
+      uses: jefeish/create-release@main
+      id: create_release
+      with:
+        tag_name: Tag ${{ env.GITHUB_RUN_NUMBER }}
+        release_name: Release ${{ env.GITHUB_RUN_NUMBER }}
+        body_path: ./CHANGELOG.md
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
