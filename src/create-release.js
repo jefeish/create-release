@@ -27,6 +27,7 @@ async function run() {
     let bodyFileContent = null;
     if (bodyPath !== '' && !!bodyPath) {
       try {
+        core.setOutput('bodyPath: '+bodyPath);
         bodyFileContent = fs.readFileSync(bodyPath, { encoding: 'utf8' });
       } catch (error) {
         core.setFailed(error.message);
